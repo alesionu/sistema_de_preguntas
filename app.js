@@ -18,7 +18,9 @@ $(document).ready(function() {
             processData: false,
             success: function(response) {
                 console.log(response);
-                $('#id_form_login').trigger('reset');
+
+                //para direccionar a un archivo en especifico cuando sea success
+                window.location.href = 'index.php';
             },
             error: function(xhr, status, error) {
                 console.error('Error:', error);
