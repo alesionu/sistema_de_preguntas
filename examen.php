@@ -28,7 +28,7 @@
     </div>
   </div>
 </nav>
-<!-- CONTENIDO PRINCIPAL -->
+
     <div class="container mt-5 mb-5 flex-grow-1">
         <div>
             <i class="bi bi-columns-gap"></i>
@@ -36,7 +36,7 @@
         </div>
         <div class="row row-cols-1 row-cols-md-2 g-4">
 
-            <!-- Card Ingredientes -->
+            
             <div class="col">
                 <div class="card h-100">
                   <img src="imagenes/programacion.jpg" class="card-img-top" alt="Examen 2">
@@ -48,7 +48,7 @@
                 </div>
             </div>
 
-            <!-- Card Agregar Ingrediente -->
+            
             <div class="col">
                 <div class="card h-100">
                   <img src="imagenes/matematica.jpg" class="card-img-top" alt="Examen 2">
@@ -61,7 +61,7 @@
                 </div>
             </div>
 
-            <!-- Card Platos -->
+           
             <div class="col">
                 <div class="card h-100">
                   <img src="imagenes/geografia.jpg" class="card-img-top" alt="Examen 2">
@@ -73,7 +73,7 @@
                 </div>
             </div>
 
-            <!-- Card Alertas -->
+            
             <div class="col">
                 <div class="card h-100">
                   <img src="imagenes/arte.jpg" class="card-img-top" alt="Examen 2">
