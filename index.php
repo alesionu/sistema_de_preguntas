@@ -23,6 +23,11 @@
         <li class="nav-item">
           <a class="nav-link" href="examen.php">Examen</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="preguntas.php">Preguntas</a>
+        </li>
+        
+
 
         
       </ul>
