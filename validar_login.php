@@ -8,7 +8,7 @@ if (isset($_POST['input_usuario']) && isset($_POST['input_password'])) {
     
     // Buscar el usuario en la base de datos
     $query = "SELECT id, usuario FROM usuarios WHERE usuario = ? AND password = ?";
-    $stmt = mysqli_prepare($connection, $query);
+    $stmt = mysqli_prepare($conexion, $query);
     mysqli_stmt_bind_param($stmt, "ss", $usuario, $password);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
@@ -26,5 +26,5 @@ if (isset($_POST['input_usuario']) && isset($_POST['input_password'])) {
     }
 }
 
-$connection->close();
+$conexion->close();
 ?>

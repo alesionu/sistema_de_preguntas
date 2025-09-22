@@ -17,7 +17,7 @@ if ($examen_id == 0) {
 
 // Verificar que el examen pertenece al usuario logueado
 $query_verificar = "SELECT id FROM examen WHERE id = ? AND id_usuarios = ?";
-$stmt_verificar = mysqli_prepare($connection, $query_verificar);
+$stmt_verificar = mysqli_prepare($conexion, $query_verificar);
 mysqli_stmt_bind_param($stmt_verificar, "ii", $examen_id, $_SESSION['usuario_id']);
 mysqli_stmt_execute($stmt_verificar);
 $result_verificar = mysqli_stmt_get_result($stmt_verificar);
@@ -29,7 +29,7 @@ if (mysqli_num_rows($result_verificar) == 0) {
 
 // Obtener las preguntas del examen
 $query = "SELECT id, texto_pregunta FROM preguntas WHERE id_examen = ? ORDER BY id";
-$stmt = mysqli_prepare($connection, $query);
+$stmt = mysqli_prepare($conexion, $query);
 mysqli_stmt_bind_param($stmt, "i", $examen_id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
@@ -58,5 +58,5 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 mysqli_stmt_close($stmt);
-mysqli_close($connection);
+mysqli_close($conexion);
 ?>

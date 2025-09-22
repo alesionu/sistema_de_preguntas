@@ -12,19 +12,11 @@
 </head>
 
 <body>
-    <?php
-    session_start();
-    // Debug temporal - puedes quitar estas líneas después de que funcione
-    if (isset($_SESSION['usuario_id'])) {
-        echo '<div class="alert alert-info">Usuario logueado ID: ' . $_SESSION['usuario_id'] . ' - ' . $_SESSION['usuario'] . '</div>';
-    } else {
-        echo '<div class="alert alert-warning">No hay sesión activa</div>';
-    }
-    ?>
+    
 
     <nav class="navbar navbar-expand-lg navbar-light bg-info">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">Navbar</a>
+            <a class="navbar-brand" href="index.php">Gestion de Examenes</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">

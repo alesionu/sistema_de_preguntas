@@ -36,6 +36,8 @@ $result = $conexion->query("SELECT id, id_usuarios, nombre_examen, status FROM e
 
     <!-- Formulario -->
     <form method="POST" action="">
+
+    
         <div class="form-group">
             <label for="id_usuario">ID Usuario</label>
             <input type="number" class="form-control" id="id_usuario" name="id_usuario" required>

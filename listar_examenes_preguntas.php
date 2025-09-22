@@ -12,10 +12,10 @@ if ($usuario_id == 0) {
 }
 
 $query = "SELECT id, nombre_examen FROM examen WHERE id_usuarios = ?";
-$stmt = mysqli_prepare($connection, $query);
+$stmt = mysqli_prepare($conexion, $query);
 
 if (!$stmt) {
-    echo '<li><span class="dropdown-item">Error en prepared statement: ' . mysqli_error($connection) . '</span></li>';
+    echo '<li><span class="dropdown-item">Error en prepared statement: ' . mysqli_error($conexion) . '</span></li>';
     exit;
 }
 
@@ -24,7 +24,7 @@ mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
 if (!$result) {
-    echo '<li><span class="dropdown-item">Query Failed: ' . mysqli_error($connection) . '</span></li>';
+    echo '<li><span class="dropdown-item">Query Failed: ' . mysqli_error($conexion) . '</span></li>';
     exit;
 }
 
@@ -41,5 +41,5 @@ if ($count > 0) {
 }
 
 mysqli_stmt_close($stmt);
-mysqli_close($connection);
+mysqli_close($conexion);
 ?>

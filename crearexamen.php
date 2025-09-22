@@ -25,6 +25,7 @@ $result = $conexion->query("SELECT id, id_usuarios, nombre_examen, status FROM e
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Crear Examen</title>
@@ -33,68 +34,73 @@ $result = $conexion->query("SELECT id, id_usuarios, nombre_examen, status FROM e
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-info">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="index.php">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.php">Gestión de examenes</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
 
-          <a class="nav-link active" aria-current="page" href="index.php">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="crearexamen.php">Examen</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="preguntas.php">Preguntas</a>
-        </li>
-        
+                        <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="crearexamen.php">Examen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="preguntas.php">Preguntas</a>
+                    </li>
 
 
-        
-      </ul>
 
-    </div>
-  </div>
-</nav>
-<body class="container mt-5">
 
-    <h2 class="mb-4">Crear Examen</h2>
+                </ul>
 
-    <!-- Formulario -->
-    <form method="POST" action="">
-        <div class="form-group">
-            <label for="id_usuario">ID Usuario</label>
-            <input type="number" class="form-control" id="id_usuario" name="id_usuario" required>
+            </div>
         </div>
+    </nav>
 
-        <div class="form-group">
-            <label for="nombre_examen">Nombre del Examen</label>
-            <input type="text" class="form-control" id="nombre_examen" name="nombre_examen" required>
-        </div>
 
-        <button type="submit" class="btn btn-primary">Guardar Examen</button>
-    </form>
+      <div class="container-sm">
+        <br>
 
-    <hr>
+       <h2 class="mb-4">Crear Examen</h2>
 
-    <!-- Mostrar exámenes -->
-    <h3>Exámenes guardados</h3>
-    <table class="table table-bordered">
-    <thead class="thead-dark">
-        <tr>
-            <th>ID</th>
-            <th>ID Usuario</th>
-            <th>Nombre del Examen</th>
-            <th>status</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php if ($result->num_rows > 0): ?>
-            <?php while($row = $result->fetch_assoc()): ?>
+        <!-- Formulario -->
+        <form method="POST" action="">
+            <div class="form-group">
+                <label for="id_usuario">ID Usuario</label>
+                <input type="number" class="form-control" id="id_usuario" name="id_usuario" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nombre_examen">Nombre del Examen</label>
+                <input type="text" class="form-control" id="nombre_examen" name="nombre_examen" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar Examen</button>
+        </form>
+
+        <hr>
+
+        <!-- Mostrar exámenes -->
+        <h3>Exámenes guardados</h3>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>ID Usuario</th>
+                    <th>Nombre del Examen</th>
+                    <th>status</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($result->num_rows > 0): ?>
+                <?php while($row = $result->fetch_assoc()): ?>
                 <tr>
                     <td><?= $row['id'] ?></td>
                     <td><?= $row['id_usuarios'] ?></td>
@@ -104,22 +110,27 @@ $result = $conexion->query("SELECT id, id_usuarios, nombre_examen, status FROM e
                     </td>
                     <td>
                         <?php if ($row['status'] == 1): ?>
-                            <a href="baja_examen.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm">Baja</a>
+                        <a href="baja_examen.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm">Baja</a>
                         <?php else: ?>
-                            <a href="alta_examen.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm">Alta</a>
+                        <a href="alta_examen.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm">Alta</a>
                         <?php endif; ?>
                     </td>
                 </tr>
-            <?php endwhile; ?>
-        <?php else: ?>
-            <tr><td colspan="5">No hay exámenes registrados</td></tr>
-        <?php endif; ?>
-    </tbody>
-</table>
+                <?php endwhile; ?>
+                <?php else: ?>
+                <tr>
+                    <td colspan="5">No hay exámenes registrados</td>
+                </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
 
-    
+      </div>
+       
 
-</body>
+
+    </body>
+
 </html>
 
 <?php $conexion->close(); ?>
