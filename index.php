@@ -23,14 +23,18 @@
         <li class="nav-item">
           <a class="nav-link" href="examen.php">Examen</a>
         </li>
-
-
-        
       </ul>
 
     </div>
   </div>
 </nav>
+<br>
+<br>
+<br>
+
+<div class="d-flex justify-content-center mt-5">
+    <a href="crear_examen.php" class="btn btn-primary btn-md">Crear Examen</a>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="app.js"></script>
