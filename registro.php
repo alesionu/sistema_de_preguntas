@@ -2,11 +2,10 @@
 include ('conexion.php');
    
     $usuario = $_POST['usuario'];
-    $contraseña = $_POST['contraseña'];
-    $gmail = $_POST['gmail'];
-    $telefono = $_POST['telefono'];
+    $password = $_POST['password'];
 
-$verficacion = mysqli_query($conexion, "SELECT * FROM registro WHERE usuario = '$usuario'");
+
+$verficacion = mysqli_query($conexion, "SELECT * FROM usuarios WHERE usuario = '$usuario'");
 $r = mysqli_num_rows($verficacion);
 
 if ($r > 0) {
@@ -20,9 +19,9 @@ if ($r > 0) {
 exit;
 }
 
-$insertar = mysqli_query($conexion, "INSERT INTO registro (usuario, contraseña, gmail, telefono)
+$insertar = mysqli_query($conexion, "INSERT INTO usuarios (usuario, password)
 
-VALUES ('$usuario', '$contraseña', '$gmail', '$telefono' )" );
+VALUES ('$usuario', '$password' )" );
 
 if ($insertar){
     echo '
