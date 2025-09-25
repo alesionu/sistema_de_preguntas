@@ -81,7 +81,6 @@ $(document).ready(function() {
             processData: false,
             success: function(response) {
                 console.log(response);
-                if (response.includes("exitoso")) {
                     // Cerrar modal
                     $("#modalPregunta").modal('hide');
                     // Recargar preguntas
@@ -92,9 +91,7 @@ $(document).ready(function() {
                     
                     // Mostrar mensaje de éxito
                     alert("Pregunta guardada exitosamente");
-                } else {
-                    alert("Error: " + response);
-                }
+              
             },
             error: function(xhr, status, error) {
                 console.error('Error:', error);
@@ -139,7 +136,6 @@ function editarPregunta(id, texto) {
 
 // Función para eliminar pregunta
 function eliminarPregunta(id) {
-    if (confirm("¿Está seguro de que desea eliminar esta pregunta?")) {
         $.ajax({
             url: 'eliminar_pregunta.php',
             method: 'POST',
@@ -153,6 +149,7 @@ function eliminarPregunta(id) {
                 } else {
                     alert("Error: " + response);
                 }
+                listar_preguntas();
             },
             error: function(xhr, status, error) {
                 console.error('Error:', error);
@@ -160,4 +157,3 @@ function eliminarPregunta(id) {
             }
         });
     }
-}
