@@ -14,8 +14,8 @@
 
 <form action="registro.php" method="Post" class="formulario">
 <h2 class="info_form">Registrarse</h2>
-<input type="text" class="formula" required placeholder="&#128113; Nombre De Usuario" name="usuario">
-<input type="textarea" class="formula" required placeholder="&#128231; Contraseña" name="password">
+<input type="text" class="formula" required placeholder="Nombre De Usuario" name="usuario">
+<input type="textarea" class="formula" required placeholder="Contraseña" name="password">
 <input type="submit" class="formula_enviar" >
 </form>
 

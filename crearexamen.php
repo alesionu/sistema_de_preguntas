@@ -35,7 +35,7 @@ $result = $conexion->query("SELECT id, id_usuarios, nombre_examen, status FROM e
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-info">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">Gestión de examenes</a>
+            <a class="navbar-brand" href="index.php">Gestion de Examenes</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -53,14 +53,9 @@ $result = $conexion->query("SELECT id, id_usuarios, nombre_examen, status FROM e
                     <li class="nav-item">
                         <a class="nav-link" href="preguntas.php">Preguntas</a>
                     </li>
-
-
-
-
-                </ul>
-
-            </div>
-        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sorteo_preguntas.php">Sorteo de Preguntas</a>
+                    </li>
     </nav>
 
 

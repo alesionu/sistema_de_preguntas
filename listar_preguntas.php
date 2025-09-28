@@ -2,7 +2,6 @@
 include('conexion.php');
 session_start();
 
-// Verificar que hay sesión activa
 if (!isset($_SESSION['usuario_id'])) {
     echo '<tr><td colspan="3">Sesión no válida</td></tr>';
     exit;
@@ -15,7 +14,6 @@ if ($examen_id == 0) {
     exit;
 }
 
-// Verificar que el examen pertenece al usuario logueado
 $query_verificar = "SELECT id FROM examen WHERE id = ? AND id_usuarios = ?";
 $stmt_verificar = mysqli_prepare($conexion, $query_verificar);
 mysqli_stmt_bind_param($stmt_verificar, "ii", $examen_id, $_SESSION['usuario_id']);
@@ -27,7 +25,6 @@ if (mysqli_num_rows($result_verificar) == 0) {
     exit;
 }
 
-// Obtener las preguntas del examen
 $query = "SELECT id, texto_pregunta FROM preguntas WHERE id_examen = ? ORDER BY id";
 $stmt = mysqli_prepare($conexion, $query);
 mysqli_stmt_bind_param($stmt, "i", $examen_id);

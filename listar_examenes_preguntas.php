@@ -28,7 +28,6 @@ if (!$result) {
     exit;
 }
 
-// Verificar si hay resultados
 $count = mysqli_num_rows($result);
 error_log("Exámenes encontrados para usuario $usuario_id: " . $count);
 

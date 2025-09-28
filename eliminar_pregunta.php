@@ -2,7 +2,6 @@
 include('conexion.php');
 session_start();
 
-// Verificar que hay sesión activa
 if (!isset($_SESSION['usuario_id'])) {
     echo "Sesión no válida";
     exit;
@@ -15,7 +14,6 @@ if ($pregunta_id == 0) {
     exit;
 }
 
-// Verificar que la pregunta pertenece a un examen del usuario logueado
 $query_verificar = "SELECT p.id FROM preguntas p 
                     INNER JOIN examen e ON p.id_examen = e.id 
                     WHERE p.id = ? AND e.id_usuarios = ?";
@@ -29,7 +27,6 @@ if (mysqli_num_rows($result_verificar) == 0) {
     exit;
 }
 
-// Eliminar la pregunta
 $query = "DELETE FROM preguntas WHERE id = ?";
 $stmt = mysqli_prepare($conexion, $query);
 mysqli_stmt_bind_param($stmt, "i", $pregunta_id);

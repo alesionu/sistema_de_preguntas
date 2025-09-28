@@ -2,10 +2,8 @@
 include('conexion.php');
 session_start();
 
-// Forzar la salida como JSON
 header('Content-Type: application/json');
 
-// Verificar que hay sesión activa
 if (!isset($_SESSION['usuario_id'])) {
     echo json_encode(["success" => false, "message" => "Sesión no válida"]);
     exit;
@@ -20,7 +18,6 @@ if (empty($texto_pregunta) || $examen_id == 0) {
     exit;
 }
 
-// Verificar que el examen pertenece al usuario logueado
 $query_verificar = "SELECT id FROM examen WHERE id = ? AND id_usuarios = ?";
 $stmt_verificar = mysqli_prepare($conexion, $query_verificar);
 mysqli_stmt_bind_param($stmt_verificar, "ii", $examen_id, $_SESSION['usuario_id']);
@@ -32,7 +29,6 @@ if (mysqli_num_rows($result_verificar) == 0) {
     exit;
 }
 
-// Si pregunta_id está vacío, es una nueva pregunta (INSERT)
 if (empty($pregunta_id)) {
     $query = "INSERT INTO preguntas (id_examen, texto_pregunta) VALUES (?, ?)";
     $stmt = mysqli_prepare($conexion, $query);
@@ -44,7 +40,6 @@ if (empty($pregunta_id)) {
         echo json_encode(["success" => false, "message" => "Error al crear pregunta: " . mysqli_error($conexion)]);
     }
 } else {
-    // Es una edición (UPDATE)
     $query_verificar_pregunta = "SELECT p.id FROM preguntas p 
                                  INNER JOIN examen e ON p.id_examen = e.id 
                                  WHERE p.id = ? AND e.id_usuarios = ?";

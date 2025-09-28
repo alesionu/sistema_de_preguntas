@@ -11,7 +11,6 @@
 
 <body>
 
-
     <nav class="navbar navbar-expand-lg navbar-light bg-info">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php">Gestion de Examenes</a>
@@ -53,20 +52,41 @@
         </div>
 
         <br>
-        <!-- Apartado de ingreso de cantida de preguntas para el examen determinado -->
-        <form id="form_cantidad_preguntas" action="">
-            <label for="">Ingresar la cantidad de preguntas</label>
+        <form id="form_cantidad_preguntas">
+            <label for="input_cantidad">Ingresar la cantidad de preguntas</label>
             <br>
-            <input type="text">
+            <div class="input-group mt-2" style="max-width: 400px;">
+                <input type="text" class="form-control" id="input_cantidad" placeholder="Número de preguntas">
+                <button type="submit" class="btn btn-primary">Sortear</button>
+            </div>
         </form>
+        <br>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Pregunta</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaPreguntas">
+                    <tr>
+                        <td colspan="2" class="text-center text-muted">
+                            Selecciona un examen y especifica la cantidad de preguntas
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
 
 
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <!-- Bootstrap 5 Bundle con Popper incluido -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Tu archivo JavaScript -->
-        <script src="app.js"></script>
 </body>
 
 </html>
