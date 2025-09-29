@@ -1,6 +1,5 @@
 $(document).ready(function() {
     
-    // Login form
     $("#id_form_login").submit(function(e) {
         e.preventDefault();
         
@@ -31,7 +30,6 @@ $(document).ready(function() {
         });
     });
 
-    // Desplegable de exámenes en sección preguntas
     $("#btn_desplegable_examen").on("click", function(){
         $.ajax({
             url: "listar_examenes_preguntas.php",
@@ -46,17 +44,14 @@ $(document).ready(function() {
         });
     });
 
-    // Manejar selección de examen
     $(document).on('click', '.dropdown-item[data-id]', function(e) {
         e.preventDefault();
         
         const examenId = $(this).data('id');
         const nombreExamen = $(this).text();
         
-        // Actualizar el botón con el nombre del examen seleccionado
         $("#btn_desplegable_examen").html(nombreExamen + ' <span class="caret"></span>');
         
-        // Mostrar la sección de preguntas
         $("#seccionPreguntas").show();
         $("#tituloExamen").text("Preguntas de: " + nombreExamen);
         
@@ -65,7 +60,6 @@ $(document).ready(function() {
         $("#examenId").val(examenId);
     });
 
-    // Formulario para guardar/editar preguntas - CORREGIDO
     $("#formPregunta").submit(function(e) {
         e.preventDefault();
         
@@ -77,11 +71,10 @@ $(document).ready(function() {
             data: formData,
             contentType: false,
             processData: false,
-            dataType: 'json', // AGREGADO: Especificar que esperamos JSON
+            dataType: 'json',
             success: function(response) {
                 console.log(response);
                 
-                // CORREGIDO: Verificar la respuesta JSON correctamente
                 if (response.success) {
                     $("#modalPregunta").modal('hide');
                     const examenId = $("#examenId").val();
@@ -95,13 +88,12 @@ $(document).ready(function() {
             },
             error: function(xhr, status, error) {
                 console.error('Error:', error);
-                console.log('Response text:', xhr.responseText); // Para debug
+                console.log('Response text:', xhr.responseText);
                 alert("Error al procesar la solicitud");
             }
         });
     });
 
-    // Función para cargar preguntas de un examen
     function cargarPreguntas(examenId) {
         $.ajax({
             url: 'listar_preguntas.php',
@@ -117,7 +109,6 @@ $(document).ready(function() {
         });
     }
 
-    // Función para limpiar el modal
     function limpiarModal() {
         $("#formPregunta")[0].reset();
         $("#preguntaId").val('');
@@ -125,44 +116,45 @@ $(document).ready(function() {
         $("#btnGuardarPregunta").text("Guardar");
     }
 
-}); // limite
-
-// Función para eliminar pregunta
-function eliminarPregunta(id) {
-    if (confirm('¿Estás seguro de que deseas eliminar esta pregunta?')) {
-        $.ajax({
-            url: 'eliminar_pregunta.php',
-            method: 'POST',
-            data: { pregunta_id: id },
-            dataType: 'json', // AGREGADO: Si eliminar_pregunta.php también devuelve JSON
-            success: function(response) {
-                // Si eliminar_pregunta.php devuelve JSON, verificar response.success
-                // Si no devuelve JSON, usar la lógica original
-                const examenId = $("#examenId").val();
-                cargarPreguntas(examenId);
-                alert("Pregunta eliminada exitosamente");
-            },
-            error: function(xhr, status, error) {
-                console.error('Error:', error);
-                alert("Error al eliminar la pregunta");
+    window.eliminarPregunta = function(id) {
+        if (confirm('¿Estás seguro de que deseas eliminar esta pregunta?')) {
+            const examenId = $("#examenId").val();
+            console.log('ID de examen antes de eliminar:', examenId);
+            
+            if (!examenId) {
+                alert("Error: No hay un examen seleccionado");
+                return;
             }
-        });
-    }
-}
+            
+            $.ajax({
+                url: 'eliminar_pregunta.php',
+                method: 'POST',
+                data: { pregunta_id: id },
+                success: function(response) {
+                    console.log('Respuesta del servidor:', response);
+                    alert("Pregunta eliminada exitosamente");
+                    cargarPreguntas(examenId);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                    console.log('Response text:', xhr.responseText);
+                    alert("Error al eliminar la pregunta");
+                }
+            });
+        }
+    };
 
-// Función para editar pregunta - NUEVA FUNCIÓN
-function editarPregunta(id, textoActual) {
-    // Llenar el modal con los datos actuales
-    $("#preguntaId").val(id);
-    $("#texto_pregunta").val(textoActual);
-    $("#modalPreguntaLabel").text("Editar Pregunta");
-    $("#btnGuardarPregunta").text("Actualizar");
-    
-    // Mostrar el modal
-    $("#modalPregunta").modal('show');
-}
+    window.editarPregunta = function(id, textoActual) {
+        $("#preguntaId").val(id);
+        $("#texto_pregunta").val(textoActual);
+        $("#modalPreguntaLabel").text("Editar Pregunta");
+        $("#btnGuardarPregunta").text("Actualizar");
+        
+        $("#modalPregunta").modal('show');
+    };
 
-// Código para sorteo de preguntas
+});
+
 $("#btn_desplegable_sorteo").on("click", function(){
     $.ajax({
         url: "desplegable_sorteo.php",
@@ -173,7 +165,6 @@ $("#btn_desplegable_sorteo").on("click", function(){
     });
 });
 
-// Cargar exámenes al hacer clic en el dropdown (parece duplicado, verificar si es necesario)
 $("#btn_desplegable_examen").on("click", function(){
     $.ajax({
         url: "desplegable_sorteo.php",
@@ -188,21 +179,17 @@ $("#btn_desplegable_examen").on("click", function(){
     });
 });
 
-// Manejar selección de examen (parece duplicado también)
 $(document).on('click', '.dropdown-item[data-id]', function(e) {
     e.preventDefault();
     
     const examenId = $(this).data('id');
     const nombreExamen = $(this).text();
     
-    // Actualizar el botón con el nombre del examen seleccionado
     $("#btn_desplegable_examen").html(nombreExamen + ' <span class="caret"></span>');
     
-    // Guardar el ID del examen seleccionado
     window.examenSeleccionado = examenId;
 });
 
-// Formulario para sorteo de preguntas
 $("#form_cantidad_preguntas").submit(function(e) {
     e.preventDefault();
     
@@ -245,7 +232,6 @@ $("#form_cantidad_preguntas").submit(function(e) {
     });
 });
 
-// Función para mostrar preguntas sorteadas
 function mostrarPreguntasSorteadas(preguntas) {
     let html = '';
     preguntas.forEach(function(pregunta, index) {

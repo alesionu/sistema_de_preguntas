@@ -1,19 +1,17 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorteo de Preguntas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="icon" href="imagenes/logo.jpg" type="image/jpg">
+    <title>Sorteo Preguntas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 </head>
 
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-info">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">Gestion de Examenes</a>
+            <a class="navbar-brand" href="index.php">Gestión de Exámenes</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -25,10 +23,13 @@
                         <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="examen.php">Examen</a>
+                        <a class="nav-link" href="crearexamen.php">Examen</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="preguntas.php">Preguntas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sorteo_preguntas.php">Sorteo de Preguntas</a>
                     </li>
                 </ul>
             </div>

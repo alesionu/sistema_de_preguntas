@@ -1,21 +1,22 @@
 <?php
-include('conexion.php');
 session_start();
+include('conexion.php');
 
+header('Content-Type: text/html; charset=UTF-8');
 
-$usuario_id = $_SESSION['usuario_id'] ?? 0;
-
+$usuario_id = $_SESSION['id_usuario'] ?? 0;
 
 if ($usuario_id == 0) {
     echo '<li><span class="dropdown-item">No hay sesión activa</span></li>';
     exit;
 }
 
-$query = "SELECT id, nombre_examen FROM examen WHERE id_usuarios = ?";
+$query = "SELECT id, nombre_examen FROM examen WHERE id_usuarios = ? ORDER BY nombre_examen ASC";
 $stmt = mysqli_prepare($conexion, $query);
 
 if (!$stmt) {
-    echo '<li><span class="dropdown-item">Error en prepared statement: ' . mysqli_error($conexion) . '</span></li>';
+    error_log('Error en prepared statement: ' . mysqli_error($conexion));
+    echo '<li><span class="dropdown-item">Error al cargar exámenes</span></li>';
     exit;
 }
 
@@ -24,19 +25,23 @@ mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
 if (!$result) {
-    echo '<li><span class="dropdown-item">Query Failed: ' . mysqli_error($conexion) . '</span></li>';
+    error_log('Query Failed: ' . mysqli_error($conexion));
+    echo '<li><span class="dropdown-item">Error al cargar exámenes</span></li>';
     exit;
 }
 
 $count = mysqli_num_rows($result);
-error_log("Exámenes encontrados para usuario $usuario_id: " . $count);
 
-if ($count > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        echo '<li><a class="dropdown-item" data-id="'.$row['id'].'" href="#">'.$row['nombre_examen'].'</a></li>';
-    }
-} else {
+if ($count === 0) {
     echo '<li><span class="dropdown-item">No hay exámenes disponibles</span></li>';
+} else {
+    $output = '';
+    while ($row = mysqli_fetch_assoc($result)) {
+        $id = htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8');
+        $nombre = htmlspecialchars($row['nombre_examen'], ENT_QUOTES, 'UTF-8');
+        $output .= '<li><a class="dropdown-item" data-id="' . $id . '" href="#">' . $nombre . '</a></li>';
+    }
+    echo $output;
 }
 
 mysqli_stmt_close($stmt);
