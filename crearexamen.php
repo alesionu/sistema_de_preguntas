@@ -62,6 +62,9 @@ $result = $conexion->query("SELECT id, nombre_examen, status FROM examen WHERE i
         <br>
 
         <h2 class="mb-4">Crear Examen</h2>
+        <?php if (isset($_GET['delete']) && $_GET['delete'] == 'success'): ?>
+        <div class="alert alert-success">Examen eliminado correctamente.</div>
+        <?php endif; ?>
 
         <form method="POST" action="">
             <div class="form-group">
@@ -92,12 +95,20 @@ $result = $conexion->query("SELECT id, nombre_examen, status FROM examen WHERE i
                                 <?= $row['status'] == 1 ? "<span class='text-success'>Activo</span>" : "<span class='text-danger'>Inactivo</span>" ?>
                             </td>
                             <td>
+                                <a href="editar_examen.php?id=<?= $row['id'] ?>" class="btn btn-warning btn-sm">Editar</a>
+
                                 <?php if ($row['status'] == 1): ?>
                                     <a href="baja_examen.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm">Baja</a>
                                 <?php else: ?>
                                     <a href="alta_examen.php?id=<?= $row['id'] ?>" class="btn btn-success btn-sm">Alta</a>
                                 <?php endif; ?>
+
+                                <a href="eliminar_examen.php?id=<?= $row['id'] ?>" class="btn btn-outline-danger btn-sm"
+                                onclick="return confirm('¿Estás seguro de eliminar este examen? Se perderá permanentemente.');">
+                                Eliminar
+                                </a>
                             </td>
+
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
