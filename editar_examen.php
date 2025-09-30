@@ -2,14 +2,12 @@
 include('conexion.php');
 session_start();
 
-// Verificar si hay sesión activa
 if (!isset($_SESSION['usuario_id'])) {
     die("Error: Debes iniciar sesión para editar un examen.");
 }
 
 $id_examen = $_GET['id'];
 
-// Obtener datos del examen
 $result = $conexion->query("SELECT nombre_examen FROM examen WHERE id = $id_examen AND id_usuarios = {$_SESSION['usuario_id']}");
 
 if ($result->num_rows == 0) {
@@ -18,7 +16,6 @@ if ($result->num_rows == 0) {
 
 $row = $result->fetch_assoc();
 
-// Si se envió el formulario para editar
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nuevo_nombre = $_POST['nombre_examen'];
 

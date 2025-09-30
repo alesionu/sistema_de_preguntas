@@ -4,7 +4,6 @@ include('conexion.php');
 $usuario = $_POST['usuario'];
 $password = $_POST['password'];
 
-// Verificacion si el user aun no esta siendo usado
 $stmt = $conexion->prepare("SELECT id FROM usuarios WHERE usuario = ?");
 $stmt->bind_param("s", $usuario);
 $stmt->execute();
@@ -21,10 +20,8 @@ if ($stmt->num_rows > 0) {
 }
 $stmt->close();
 
-// Hasheo
 $hash_password = password_hash($password, PASSWORD_DEFAULT);
 
-// Insertar el usuario con prepared statement
 $stmt = $conexion->prepare("INSERT INTO usuarios (usuario, password) VALUES (?, ?)");
 $stmt->bind_param("ss", $usuario, $hash_password);
 
