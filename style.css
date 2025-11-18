@@ -18,12 +18,10 @@ body {
 }
 
 .centered-container {
-    height: calc(100vh - 56px);
+    margin-top: 120px;  /* separa el botón del menú */
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* solo horizontal */
 }
-
 .btn-start {
     font-size: 2.5rem;
     padding: 1.5rem 4rem;
