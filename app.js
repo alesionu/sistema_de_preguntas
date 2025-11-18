@@ -234,12 +234,15 @@ $("#form_cantidad_preguntas").submit(function(e) {
 
 function mostrarPreguntasSorteadas(preguntas) {
     let html = '';
+
     preguntas.forEach(function(pregunta, index) {
-        html += '<tr>';
-        html += '<td>' + pregunta.id + '</td>';
-        html += '<td>' + pregunta.pregunta + '</td>';
-        html += '</tr>';
+        html += `
+            <li class="list-group-item">
+                <strong>#${index + 1}:</strong> ${pregunta.pregunta}
+            </li>
+        `;
     });
-    
-    $("#tablaPreguntas").html(html);
+
+    $("#listaPreguntas").html(html);
+    $("#cardPreguntas").fadeIn();
 }

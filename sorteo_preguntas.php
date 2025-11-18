@@ -63,23 +63,16 @@
         </form>
         <br>
 
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-                <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Pregunta</th>
-                    </tr>
-                </thead>
-                <tbody id="tablaPreguntas">
-                    <tr>
-                        <td colspan="2" class="text-center text-muted">
-                            Selecciona un examen y especifica la cantidad de preguntas
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <div id="cardPreguntas" class="card shadow mt-4" style="display:none;">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Preguntas Sorteadas</h5>
+    </div>
+
+    <div class="card-body">
+        <ul id="listaPreguntas" class="list-group">
+        </ul>
+    </div>
+</div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
