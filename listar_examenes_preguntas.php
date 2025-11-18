@@ -6,10 +6,7 @@ header('Content-Type: text/html; charset=UTF-8');
 
 $usuario_id = $_SESSION['id_usuario'] ?? 0;
 
-if ($usuario_id == 0) {
-    echo '<li><span class="dropdown-item">No hay sesión activa</span></li>';
-    exit;
-}
+
 
 $query = "SELECT id, nombre_examen FROM examen WHERE id_usuarios = ? ORDER BY nombre_examen ASC";
 $stmt = mysqli_prepare($conexion, $query);
@@ -32,9 +29,7 @@ if (!$result) {
 
 $count = mysqli_num_rows($result);
 
-if ($count === 0) {
-    echo '<li><span class="dropdown-item">No hay exámenes disponibles</span></li>';
-} else {
+
     $output = '';
     while ($row = mysqli_fetch_assoc($result)) {
         $id = htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8');
@@ -42,7 +37,7 @@ if ($count === 0) {
         $output .= '<li><a class="dropdown-item" data-id="' . $id . '" href="#">' . $nombre . '</a></li>';
     }
     echo $output;
-}
+
 
 mysqli_stmt_close($stmt);
 mysqli_close($conexion);
