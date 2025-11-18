@@ -1,6 +1,6 @@
 <?php
 include('conexion.php');
-session_start();
+session_start(); 
 
 if (isset($_POST['input_usuario']) && isset($_POST['input_password'])) {
     $usuario = $_POST['input_usuario'];
@@ -16,17 +16,23 @@ if (isset($_POST['input_usuario']) && isset($_POST['input_password'])) {
         $user_data = mysqli_fetch_assoc($result);
         
         if (password_verify($password, $user_data['password'])) {
-            $_SESSION['usuario_id'] = $user_data['id'];
+            
+          
+            $_SESSION['id_usuario'] = $user_data['id']; 
+            
             $_SESSION['usuario'] = $user_data['usuario'];
             
             echo "Login exitoso";
+            exit; 
         } else {
             echo "incorrecto";
+            exit;
         }
     } else {
         echo "incorrecto";
+        exit;
     }
 }
 
-$conexion->close();
+mysqli_close($conexion);
 ?>

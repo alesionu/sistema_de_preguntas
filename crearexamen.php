@@ -1,26 +1,49 @@
 <?php
-include('conexion.php');
 session_start();
+include('conexion.php');
 
 
+if (!isset($_SESSION['id_usuario'])) {
+    header('Location: login.php');
+    exit;
+}
 
-$id_usuario = $_SESSION['usuario_id'];  
+$id_usuario = $_SESSION['id_usuario'];
+$mensaje = ""; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre_examen = $_POST['nombre_examen'];
     
-    $sql = "INSERT INTO examen (id_usuarios, nombre_examen) VALUES ('$id_usuario', '$nombre_examen')";
-
-    if ($conexion->query($sql) === TRUE) {
-        echo "<p style='color:green;'>Examen creado con éxito</p>";
+    $sql = "INSERT INTO examen (id_usuarios, nombre_examen) VALUES (?, ?)";
+    $stmt = $conexion->prepare($sql);
+    
+    if ($stmt) {
+        $stmt->bind_param("is", $id_usuario, $nombre_examen);
+        
+        if ($stmt->execute()) {
+            $mensaje = "<div class='alert alert-success'>Examen creado con éxito</div>";
+        } else {
+            $mensaje = "<div class='alert alert-danger'>Error al crear el examen: " . $stmt->error . "</div>";
+        }
+        $stmt->close();
     } else {
-        echo "Error: " . $conexion->error;
+        $mensaje = "<div class='alert alert-danger'>Error al preparar la consulta: " . $conexion->error . "</div>";
     }
 }
 
-$result = $conexion->query("SELECT id, nombre_examen, status FROM examen WHERE id_usuarios = '$id_usuario'");
-?>
+$query_select = "SELECT id, nombre_examen, status FROM examen WHERE id_usuarios = ?";
+$stmt_select = $conexion->prepare($query_select);
 
+if ($stmt_select) {
+    $stmt_select->bind_param("i", $id_usuario);
+    $stmt_select->execute();
+    $result = $stmt_select->get_result();
+} else {
+    $result = null;
+    echo "Error al preparar la consulta de selección: " . $conexion->error;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -40,12 +63,13 @@ $result = $conexion->query("SELECT id, nombre_examen, status FROM examen WHERE i
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                
+                <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                        <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="crearexamen.php">Examen</a>
+                        <a class="nav-link active" aria-current="page" href="crearexamen.php">Examen</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="preguntas.php">Preguntas</a>
@@ -54,6 +78,13 @@ $result = $conexion->query("SELECT id, nombre_examen, status FROM examen WHERE i
                         <a class="nav-link" href="sorteo_preguntas.php">Sorteo de Preguntas</a>
                     </li>
                 </ul>
+
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                     <li class="nav-item">
+                        <a class="nav-link" href="cerrar_sesion.php">Cerrar Sesión</a>
+                     </li>
+                </ul>
+
             </div>
         </div>
     </nav>
@@ -62,11 +93,16 @@ $result = $conexion->query("SELECT id, nombre_examen, status FROM examen WHERE i
         <br>
 
         <h2 class="mb-4">Crear Examen</h2>
-        <?php if (isset($_GET['delete']) && $_GET['delete'] == 'success'): ?>
-        <div class="alert alert-success">Examen eliminado correctamente.</div>
+        
+        <?php 
+        echo $mensaje; 
+        
+        if (isset($_GET['delete']) && $_GET['delete'] == 'success'): 
+        ?>
+            <div class="alert alert-success">Examen eliminado correctamente.</div>
         <?php endif; ?>
 
-        <form method="POST" action="">
+        <form method="POST" action="crearexamen.php"> 
             <div class="form-group">
                 <label for="nombre_examen">Nombre del Examen</label>
                 <input type="text" class="form-control" id="nombre_examen" name="nombre_examen" required>
@@ -87,10 +123,10 @@ $result = $conexion->query("SELECT id, nombre_examen, status FROM examen WHERE i
                 </tr>
             </thead>
             <tbody>
-                <?php if ($result->num_rows > 0): ?>
+                <?php if ($result && $result->num_rows > 0): ?>
                     <?php while($row = $result->fetch_assoc()): ?>
                         <tr>
-                            <td><?= $row['nombre_examen'] ?></td>
+                            <td><?= htmlspecialchars($row['nombre_examen'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td>
                                 <?= $row['status'] == 1 ? "<span class='text-success'>Activo</span>" : "<span class='text-danger'>Inactivo</span>" ?>
                             </td>
@@ -123,5 +159,9 @@ $result = $conexion->query("SELECT id, nombre_examen, status FROM examen WHERE i
 </body>
 
 </html>
-
-<?php $conexion->close(); ?>
+<?php 
+if (isset($stmt_select)) {
+    $stmt_select->close();
+}
+$conexion->close(); 
+?>

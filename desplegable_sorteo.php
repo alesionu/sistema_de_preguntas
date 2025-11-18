@@ -1,13 +1,24 @@
 <?php
+session_start(); // <-- ¡ESTA DEBE SER LA LÍNEA 1!
 include 'conexion.php';
 
-session_start();
+if (!isset($_SESSION['id_usuario'])) {
+    echo '<li><span class="dropdown-item">Error: Sesión no válida</span></li>';
+    exit; 
+}
 
-
-$usuario_id = $_SESSION['usuario_id'];
+$usuario_id = $_SESSION['id_usuario'];
 
 $sql = "SELECT id, nombre_examen FROM examen WHERE id_usuarios = ? ORDER BY nombre_examen";
 $stmt = mysqli_prepare($conexion, $sql);
+
+if (!$stmt) {
+    error_log('Error en prepared statement: ' . mysqli_error($conexion));
+    echo '<li><span class="dropdown-item">Error al cargar</span></li>';
+    mysqli_close($conexion);
+    exit;
+}
+
 mysqli_stmt_bind_param($stmt, 'i', $usuario_id);
 mysqli_stmt_execute($stmt);
 $resultado = mysqli_stmt_get_result($stmt);

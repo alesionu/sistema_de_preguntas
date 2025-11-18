@@ -1,12 +1,16 @@
 <?php
-session_start();
+session_start(); 
+
+if (!isset($_SESSION['id_usuario'])) {
+    //header('Location: login.php'); // No es necesario para AJAX, un error es mejor
+    echo '<li><span class="dropdown-item">Error: Sesión no válida</span></li>';
+    exit;
+}
 include('conexion.php');
 
 header('Content-Type: text/html; charset=UTF-8');
 
-$usuario_id = $_SESSION['id_usuario'] ?? 0;
-
-
+$usuario_id = $_SESSION['id_usuario']; // Esto ya estaba bien
 
 $query = "SELECT id, nombre_examen FROM examen WHERE id_usuarios = ? ORDER BY nombre_examen ASC";
 $stmt = mysqli_prepare($conexion, $query);
@@ -29,7 +33,10 @@ if (!$result) {
 
 $count = mysqli_num_rows($result);
 
-
+// --- ESTA ES LA LÓGICA QUE FALTABA ---
+if ($count === 0) {
+    echo '<li><span class="dropdown-item">No hay exámenes disponibles</span></li>';
+} else {
     $output = '';
     while ($row = mysqli_fetch_assoc($result)) {
         $id = htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8');
@@ -37,7 +44,8 @@ $count = mysqli_num_rows($result);
         $output .= '<li><a class="dropdown-item" data-id="' . $id . '" href="#">' . $nombre . '</a></li>';
     }
     echo $output;
-
+}
+// --- FIN DE LA LÓGICA AGREGADA ---
 
 mysqli_stmt_close($stmt);
 mysqli_close($conexion);
