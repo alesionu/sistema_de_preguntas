@@ -141,3 +141,13 @@ body {
 .login-card .btn-register:hover {
     background-color: #ddd;
 }
+.login-body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('imagenes/biblioteca2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
