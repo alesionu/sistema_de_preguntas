@@ -1,14 +1,12 @@
 <?php
-session_start(); // <-- ¡ESTA DEBE SER LA LÍNEA 1!
+session_start(); 
 include('conexion.php');
 
-// Comprobar la variable NUEVA ('id_usuario')
 if (!isset($_SESSION['id_usuario'])) {
     echo '<tr><td colspan="3" class="text-center text-danger">Error: Sesión no válida (Reinicie la página)</td></tr>';
     exit;
 }
 
-// Usar la variable NUEVA
 $id_usuario = $_SESSION['id_usuario'];
 $examen_id = $_GET['examen_id'] ?? 0;
 
@@ -17,7 +15,6 @@ if ($examen_id == 0) {
     exit;
 }
 
-// Usar la variable NUEVA en la consulta de verificación
 $query_verificar = "SELECT id FROM examen WHERE id = ? AND id_usuarios = ?";
 $stmt_verificar = mysqli_prepare($conexion, $query_verificar);
 mysqli_stmt_bind_param($stmt_verificar, "ii", $examen_id, $id_usuario);
@@ -29,7 +26,6 @@ if (mysqli_num_rows($result_verificar) == 0) {
     exit;
 }
 
-// El resto de tu código
 $query = "SELECT id, texto_pregunta FROM preguntas WHERE id_examen = ? ORDER BY id";
 $stmt = mysqli_prepare($conexion, $query);
 mysqli_stmt_bind_param($stmt, "i", $examen_id);

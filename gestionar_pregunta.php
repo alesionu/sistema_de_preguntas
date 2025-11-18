@@ -1,5 +1,5 @@
 <?php
-session_start(); // <-- ¡ESTA DEBE SER LA LÍNEA 1!
+session_start(); 
 include('conexion.php');
 
 header('Content-Type: application/json');
